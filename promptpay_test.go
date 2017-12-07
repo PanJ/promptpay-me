@@ -1,0 +1,34 @@
+package promptpay_test
+
+import (
+	"testing"
+
+	promptpay "github.com/PanJ/promptpay-me"
+)
+
+func TestGenerate(t *testing.T) {
+	cases := []struct {
+		target string
+		amount float32
+		result string
+	}{
+		{"", 0, "00020101021129370016A000000677010111011300000000000005802TH53037640002016304B249"},
+		{"0812345678", 1000, "00020101021229370016A000000677010111011300668123456785802TH530376400020154071000.0063042D06"},
+		{"+66801234567", 123.45, "00020101021229370016A000000677010111011300668012345675802TH53037640002015406123.456304C41F"},
+		{"1234567890123", 999, "00020101021229370016A000000677010111021312345678901235802TH53037640002015406999.0063044761"},
+		{"123456789012345", 5000.55, "00020101021229390016A00000067701011103151234567890123455802TH530376400020154075000.5563043C02"},
+	}
+
+	for _, c := range cases {
+		result := promptpay.Generate(c.target, c.amount)
+		if result != c.result {
+			t.Errorf("expected generate from %s %f to be %s; got %s\n", c.target, c.amount, c.result, result)
+		}
+	}
+}
+
+func BenchmarkGenerate(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		promptpay.Generate("+66000000000", 1000)
+	}
+}
