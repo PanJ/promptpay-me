@@ -42,4 +42,5 @@ func main() {
 	router.GET("/", Index)
 	router.GET("/:amount", WithAmount)
 	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Println("Server started")
 }
