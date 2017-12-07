@@ -12,7 +12,7 @@ import (
 var id string
 
 func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	png, err := qrcode.Encode(GeneratePayload(id, 0), qrcode.Medium, 256)
+	png, err := qrcode.Encode(GeneratePayload(id, 0), qrcode.High, 512)
 	if err != nil {
 		http.Error(w, "Unable to generate QR Code", 500)
 		return
