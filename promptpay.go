@@ -10,7 +10,7 @@ import (
 // qr consts
 const (
 	idPayloadFormat                            = "00"
-	idPoiMethod                                = "01"
+	idPOIMethod                                = "01"
 	idMerchantInformationBot                   = "29"
 	idTransactionCurrency                      = "53"
 	idTransactionAmount                        = "54"
@@ -75,9 +75,9 @@ func Generate(target string, amount float32) string {
 	data := ""
 	data += f(idPayloadFormat, payloadFormatEMVQRCPSMerchantPresentedMode)
 	if amount != 0 {
-		data += f(idPoiMethod, poiMethodDynamic)
+		data += f(idPOIMethod, poiMethodDynamic)
 	} else {
-		data += f(idPoiMethod, poiMethodStatic)
+		data += f(idPOIMethod, poiMethodStatic)
 	}
 	merchantInfo := f(merchantInformationTemplateIDGUID, guidPromptpay) + f(targetType, formatTarget(target))
 	data += f(idMerchantInformationBot, merchantInfo)
